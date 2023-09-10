@@ -6,13 +6,28 @@
     <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/home.css">
+    <link rel="icon" href="../../img/Icon/icon.png" />
 </head>
 <body>
-    <main style="justify-content: space-between; gap: 20px; padding: 2%; align-items: center;" class="flex h-screen bg-cover bg-no-repeat bg-top bg-[url('../../img/background/M/bg2.png')] lg:bg-[url('../../img/background/XL/bg2.png')]">
-        <section style="flex:5;" class="">
-        Imagen
+    <main  
+    class="flex justify-between gap-5 p-[2%] items-center h-screen bg-cover bg-no-repeat bg-top bg-[url('../../img/background/M/bg2.png')] lg:bg-[url('../../img/background/XL/bg2.png')] lg: flex-col	md: flex-col  sm:flex-row">
+        <section class="flex-[5]">
+       
     </section>
-    <section style="background-color: azure; flex: 3;" class="h-full rounded ">Login</section>
+    <section class="flex flex-col items-center  gap-5 h-full rounded  bg-slate-200 lg: flex-[3] md: flex-[3] sm: flex-[1]">
+        <div class="p-5">
+            <img class="object-scale-down h-56 w-96" src="../../img/logo/logo.png" alt="Quinielas Compas">
+        </div>
+        <form class="flex flex-col w-full p-10 gap-5" method="post" >
+             
+            <label for="correo" class="text-[#25274C] font-small text-lg">Correo </label>
+            <input id="email" type="text" class="rounded p-3">
+            <label for="password" class="text-[#25274C] font-small text-lg">Contraseña</label>
+            <input id="password" type="password" class="rounded p-3">
+            <button class="block w-full bg-[#25274C] text-white rounded p-3 ">Iniciar Sesion</button>
+        </form>
+      
+    </section>
 </main>
     <footer></footer>
 </body>
