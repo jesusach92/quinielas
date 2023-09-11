@@ -17,7 +17,7 @@ function loginUser($conexion, $email, $password) {
             header("Location: ../admin/index.html"); // Redirige al usuario a la página de inicio de sesión exitoso
             exit(); // Finaliza el script
         } else {
-            return "Credenciales inválidas."; // Si la contraseña no coincide, devuelve un mensaje de error
+            return "Credenciales inválidas.". "su pasword: ". $row['passwordUser'] . " ingresada ". $password; // Si la contraseña no coincide, devuelve un mensaje de error
         }
     } else {
         return "Usuario no encontrado."; // Si no se encuentra un usuario con el correo electrónico proporcionado, devuelve un mensaje de error
