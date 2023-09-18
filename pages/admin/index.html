@@ -8,8 +8,11 @@
     <link rel="icon" href="../../img/Icon/icon.png" />
     <title>admin</title>
 </head>
-<body>
-    <header class="h- bg-[#25274C] w-full">
+<body class="flex flex-col h-screen">
+    <header class="basis-1 flex justify-between bg-[#25274C] w-full">
+        <div class="w-28 pl-3 pt-2">
+            <img src="../../img/logo/logo2.png" alt="Quinielas Compas" class="object-scale-down">
+        </div>
         <nav>
             <ul>
                 <li>cerar sesion</li>
@@ -18,9 +21,20 @@
             </ul>
         </nav>
     </header>
-    <main class="flex flex-row">
-        <aside class="flex-1">Menu</aside>
-        <section class="flex-1">Principal</section>
+    <main class="grow flex flex-row">
+        <aside class="basis-1/8 bg-[#25274C] h-full text-white">
+            <div>
+                <ul class=" py-10 pl-8 pr-6 pt-10 flex flex-col gap-5">
+                <li><button> Agregar Quiniela</button> </li>
+                <li>Cargar Equipos</li>
+                <li>Consultar Quinielas</li>
+                <li>Cargar Resultados</li>
+                <li>Borrar Quinielas</li>
+                <li></li>
+                <li></li></ul>
+            </div>
+        </aside>
+        <section class="">Principal</section>
     </main>
     <footer></footer>
 </body>
