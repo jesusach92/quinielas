@@ -1,3 +1,11 @@
+<?php
+session_start();
+$session = $_SESSION["id"];
+if(!isset($session)){
+    header("Location: ../userLogin");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +23,7 @@
         </div>
         <nav>
             <ul>
-                <li>cerar sesion</li>
+                <li><a href= "../signup">cerrar sesion</a></li>
                 <li>inicio</li>
                 <li></li>
             </ul>
