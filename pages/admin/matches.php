@@ -1,5 +1,9 @@
 <?php
 session_start();
+$session = $_SESSION["id"];
+if(!isset($session)){
+    header("Location: ../userLogin");
+}else echo'';
 include("../backend/database/config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,7 +51,23 @@ $consultaPartidos = "SELECT equipA, equipB, fecha_inicio, fecha_fin, match_date,
 $resultadoPartidos = mysqli_query($conexion, $consultaPartidos);
 
 if ($resultadoPartidos) {
-    echo "<h2>Partidos Guardados:</h2>";
+   echo ' <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" href="../../img/Icon/icon.png" />
+        <title>Quiniela</title>
+    </head>
+    <body>
+    <body class="flex flex-col h-screen">';
+    require("./common/header.php");
+     echo '<main class="grow flex flex-row">';
+     require('./common/sidebar.php');
+     echo    '<section class="">';
+      echo "<h2>Partidos Guardados:</h2>";
     echo "<ul>";
     while ($fila = mysqli_fetch_assoc($resultadoPartidos)) {
         echo "<li>" . $fila["equipA"] . " vs " . $fila["equipB"] . " - Inicio: " . $fila["fecha_inicio"] . " - Fin: " . $fila["fecha_fin"] . " - Fecha del Partido: " . $fila["match_date"] . " - Jornadas: " . $fila["journeys"] . "</li>";
@@ -56,6 +76,12 @@ if ($resultadoPartidos) {
 } else {
     echo "Error al obtener los partidos guardados: " . mysqli_error($conexion);
 }
+    echo' </section>
+     </main>
+     <footer></footer>
+    </body>
+    </html> ';
+   
 
 // Cierra la conexión a la base de datos
 mysqli_close($conexion);

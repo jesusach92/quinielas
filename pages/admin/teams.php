@@ -3,7 +3,8 @@ session_start();
 $session = $_SESSION["id"];
 if(!isset($session)){
     header("Location: ../userLogin");
-}else echo'';
+}else 
+echo ''
 ?>
 
 <!DOCTYPE html>
@@ -14,16 +15,13 @@ if(!isset($session)){
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="icon" href="../../img/Icon/icon.png" />
-    <title>admin</title>
+    <title>Guarda Equipo</title>
 </head>
 <body class="flex flex-col h-screen">
-    <!-- '; -->
-  <?php require("./common/header.php");
-   echo ' <main class="grow flex flex-row">';
- require('./common/sidebar.php');
-    echo '<section class="">';
-    ?>
-    </section>
+   <?php require("./common/header.php") ?>
+    <main class="grow flex flex-row">
+        <?php require('./common/sidebar.php');?>
+        <section class=""></section>
     </main>
     <footer></footer>
 </body>

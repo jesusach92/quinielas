@@ -1,4 +1,9 @@
 <?php
+session_start();
+$session = $_SESSION["id"];
+if(!isset($session)){
+    header("Location: ../userLogin");
+}else echo'';
 // Incluye la configuración de la base de datos
 include("../backend/database/config.php");
 

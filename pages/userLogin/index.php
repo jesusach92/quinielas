@@ -18,7 +18,7 @@ if(isset($_SESSION['id']))
 </head>
 <body class="">
     <main  
-    class="flex justify-between gap-5 p-[2%] items-center h-screen bg-cover bg-no-repeat bg-top bg-[url('../../img/background/M/bg2.png')] lg:bg-[url('../../img/background/XL/bg2.png')] lg: flex-col	md: flex-col  sm:flex-row">
+    class="flex justify-between gap-5 p-[2%] items-center h-screen bg-cover bg-no-repeat bg-top bg-[url('../../img/background/M/bg1.jpg')] lg:bg-[url('../../img/background/XL/bg1.jpg')] lg: flex-col	md: flex-col  sm:flex-row">
         <section class="flex-[5]">
        
     </section>
@@ -27,13 +27,13 @@ if(isset($_SESSION['id']))
             <img class="object-scale-down h-56 w-96 sm: h-4 w-8" src="../../img/logo/logo.png" alt="Quinielas Compas">
         </div>
         <form class="flex flex-col w-full p-10 lg:gap-5 xl:gap-5 md:gap-1 sm:gap-1 p-3" action="../backend/regist.php" method="post">
-            <label for="email" class="text-[#25274C] font-small text-lg">Correo Electrónico</label>
+            <label for="email" class="text-[#058637] font-small text-lg">Correo Electrónico</label>
             <input id="email" type="email" class="rounded p-3" name="email" required>
         
-            <label for="password" class="text-[#25274C] font-small text-lg">Contraseña</label>
+            <label for="password" class="text-[#058637] font-small text-lg">Contraseña</label>
             <input id="password" type="password" class="rounded p-3" name="password" required>
         
-            <input class="block w-full bg-[#25274C] text-white rounded p-3" type="submit" value="Iniciar Sesión">
+            <input class="block w-full bg-[#058637] text-white rounded p-3" type="submit" value="Iniciar Sesión">
         </form>
     </section>
 </main>
