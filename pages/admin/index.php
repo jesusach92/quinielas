@@ -3,6 +3,7 @@ session_start();
 $session = $_SESSION["id"];
 if(!isset($session)){
     header("Location: ../userLogin");
+    exit();
 }else echo'';
 ?>
 

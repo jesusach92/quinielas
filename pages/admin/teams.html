@@ -49,7 +49,8 @@ echo ''
         </aside>
         <!-- <?php require('./common/sidebar.php');?> -->
         <section class="w-full flex justify-center pt-3">
-            <form class="h-full p-3 px-8 w-3/4" action="" name="teams" method="post">
+            <form class="h-full p-3 px-8 w-3/4" action="./teams.php" enctype="multipart/form-data" name="teams"
+                method="post">
                 <div class="bg-[#DCF5E6] h-4/5 rounded-lg">
                     <div class="rounded p-3 bg-[#1F8635] w-full flex flex-row gap-2 items-center text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1.25em"
@@ -67,7 +68,7 @@ echo ''
                     <div class="flex flex-col gap-2 p-5">
                         <div name="contenedorInput" class="mb-3">
                             <label for="liga" class="block text-gray-700 text-md font-bold mb-2">Liga</label>
-                            <select
+                            <select required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 <option selected disabled>Elige la Liga</option>
                                 <option value="local">Local</option>
@@ -77,22 +78,22 @@ echo ''
                         <div name="contenedorInput" class="mb-3">
                             <label for="name" class="block text-gray-700 text-md font-bold mb-2">Nombre del
                                 Equipo</label>
-                            <input type="text"
+                            <input type="text" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="name" type="text" placeholder="Nombre" name="name">
                         </div>
                         <div name="contenedorInput" class="mb-3">
                             <label class="block text-gray-700 text-md font-bold mb-2" for="escudo">Cargar
                                 Escudo</label>
-                            <input
+                            <input required
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                                aria-describedby="ariaLabel" id="escudo" type="file">
+                                aria-describedby="ariaLabel" id="escudo" name="escudo" type="file">
                             <p class="mt-1 text-sm text-gray-500" id="ariaLabel">SVG, PNG, JPG
                                 or GIF (MAX. 800x400px).</p>
 
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit"
+                            <button type="submit" name="guardar_equipos"
                                 class="focus:outline-none text-white bg-[#DCF5E6] hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-[green-700] dark:focus:ring-green-800">Guardar</button>
                         </div>
 
