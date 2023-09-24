@@ -86,7 +86,7 @@ require("../controller/addMatch.php")
                         </select>
                     </div>
                     <div  name="contenedorInput" class="mb-3">
-                        <label class="block text-gray-700 text-md font-bold mb-2" for="fecha_quiniela">Fecha de la Quiniela:</label>
+                        <label class="block text-gray-700 text-md font-bold mb-2" for="fecha_quiniela">Fecha del Partido:</label>
                         <input type="date" name="fecha_quiniela" id="fecha_quiniela" required><br>
                     </div>
                     <div  name="contenedorInput" class="mb-3">
