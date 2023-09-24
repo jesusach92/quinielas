@@ -10,5 +10,4 @@
             </ul>
         </nav>
     </div>
-    <script src="../public/js/menu.js"></script>
 </header>
