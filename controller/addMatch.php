@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["agregar_quiniela"])) {
             mysqli_stmt_bind_param($stmt, "sssi", $equipoLocal, $equipoVisitante, $fechaQuiniela, $numeroJornada);
 
             if (mysqli_stmt_execute($stmt)) {
-                $message = "Quiniela guardada exitosamente.";
+                $message = "Partido guardado exitosamente.";
             } else {
-                $message = "Error al guardar la quiniela: " . mysqli_error($conexion);
+                $message = "Error al guardar el partido: " . mysqli_error($conexion);
             }
 
             mysqli_stmt_close($stmt);

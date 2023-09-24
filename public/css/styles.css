@@ -10,7 +10,6 @@ body {
 header {
     background-color: #073E1C;
     color: white;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +29,7 @@ aside {
     background-color: #025D25;
     color: white;
     flex-basis: 20%;
-    padding: 20px;
+    padding: 20px 0px;
 }
 
 aside ul {

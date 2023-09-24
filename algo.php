@@ -26,7 +26,7 @@ require("../model/backend/database/config.php")
      <form class="h-full p-3 px-8 w-3/4" method="post" action="">
         <label for="numero_jornada">Número de Jornada:</label>
         <select name="numero_jornada" id="numero_jornada">
-            <option value="9">Jornada 9 </option>
+            <option value="1">Jornada 1</option>
             <option value="2">Jornada 2</option>
         </select>
         <input type="submit" value="Mostrar Partidos">
@@ -39,7 +39,7 @@ require("../model/backend/database/config.php")
         $result = $conexion->query($sql);
 
         if ($result->num_rows > 0) {
-            // Mostrar los partidos en una tabla
+     
             echo "<table border='1'>
                     <tr>
                         <th>ID</th>
