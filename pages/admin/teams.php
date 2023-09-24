@@ -33,8 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["guardar_equipos"])) {
 
     if (mysqli_query($conexion, $sql)) {
         $mensaje = "Equipo guardado exitosamente.";
-        echo 'alert("Equipo Guardado Correctamente")';
         header("Location: ./teams.html");
+        echo '<script>alert("Equipo Guardado Correctamente")
+        </script>';
     } else {
         $mensaje = "Error al guardar el equipo: " . mysqli_error($conexion);
     }
