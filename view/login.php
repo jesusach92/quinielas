@@ -26,7 +26,7 @@ if(isset($_SESSION['id']))
         <div class="p-5 sm: p-2 xl: p-5">
             <img class="object-scale-down h-56 w-96 sm: h-4 w-8" src="../public/img/logo/logo.png" alt="Quinielas Compas">
         </div>
-        <form class="flex flex-col w-full p-10 lg:gap-5 xl:gap-5 md:gap-1 sm:gap-1 p-3" action="../model/regist.php" method="post">
+        <form class="flex flex-col w-full p-10 lg:gap-5 xl:gap-5 md:gap-1 sm:gap-1 p-3" action="../model/backend/regist.php" method="post">
             <label for="email" class="text-[#058637] font-small text-lg">Correo Electrónico</label>
             <input id="email" type="email" class="rounded p-3" name="email" required>
         
@@ -37,6 +37,6 @@ if(isset($_SESSION['id']))
         </form>
     </section>
 </main>
-    <footer></footer>
+<?php require("./common/footer.php")?>
 </body>
 </html> 
