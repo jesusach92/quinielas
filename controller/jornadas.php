@@ -1,6 +1,7 @@
 <?php
+session_start();
 // Incluye el archivo de configuración de la base de datos
-include("../backend/database/config.php");
+include("../model/backend/database/config.php");
 
 // Verifica si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -21,14 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Ejecuta la consulta preparada
         if (mysqli_stmt_execute($stmt)) {
-            echo "Los datos se han guardado exitosamente en la base de datos.";
+            header("Location: ../view/successPage.php");
+            $_SESSION["exito"] = 1;
+            $_SESSION["nextPage"] = "./jornadas.php";
         } else {
-            echo "Error al guardar los datos: " . mysqli_error($conexion);
+            header("Location: ../view/failPage.php ");
+            $_SESSION["nextPage"] = "./jornadas.php";
+            $_SESSION["message"] = "Error al guardar los datos: " . mysqli_error($conexion);
         }
 
         // Cierra la consulta preparada
         mysqli_stmt_close($stmt);
     } else {
+
         echo "Error en la preparación de la consulta: " . mysqli_error($conexion);
     }
 }
