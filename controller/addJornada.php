@@ -1,6 +1,6 @@
 <?php
 
-include("../backend/database/config.php");
+include("../model/backend/database/config.php");
 
 // Obtener la lista de equipos sin duplicados desde la tabla "equipos"
 $consultaEquipos = "SELECT DISTINCT nombre FROM equipos";

@@ -6,6 +6,7 @@ if (!isset($session)) {
     header("Location: ./login.php");
     exit(); // Terminar el script si no hay sesión iniciada
 }
+require("../controller/addJornada.php")
 ?>
 
 <!DOCTYPE html>
