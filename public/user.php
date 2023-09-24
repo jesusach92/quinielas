@@ -1,96 +1,83 @@
 <?php
-// Incluye el archivo de configuración de la base de datos (ajusta la ruta según tu configuración)
-require_once "../model/backend/database/config.php";
+// Incluye el archivo de configuración de la base de datos
+include "../model/backend/database/config.php";
 
-function insertarQuiniela($conexion, $nombre, $partidoId, $resultado) {
-    $sql = "INSERT INTO quinielas (names, partido_id, resultado) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($conexion, $sql);
-    mysqli_stmt_bind_param($stmt, "siss", $nombre, $partidoId, $resultado);
-
-    if (mysqli_stmt_execute($stmt)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-$nombre = "";
-$resultadosSeleccionados = [];
-$quinielasEnviadas = 0;
-
+// Verifica si se ha proporcionado la variable "jornada" en la URL
 if (isset($_GET["jornada"])) {
-    $jornadaSeleccionada = intval($_GET["jornada"]);
+    $jornadaSeleccionada = $_GET["jornada"];
+    
+    // Convierte la jornada seleccionada a un número entero seguro
+    $jornadaSeleccionada = intval($jornadaSeleccionada);
+    
+    // Realiza una consulta para obtener los partidos de la jornada seleccionada
     $consulta = "SELECT * FROM partidos WHERE journeys = $jornadaSeleccionada";
     $resultados = mysqli_query($conexion, $consulta);
-
+    
     if (!$resultados) {
         die("Error al obtener los resultados: " . mysqli_error($conexion));
     }
-
+    
+    // Procesar el formulario si se ha enviado
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $nombre = mysqli_real_escape_string($conexion, $_POST["nombre"]);
-        $consultaQuinielas = "SELECT COUNT(*) as total FROM quinielas WHERE names = '$nombre'";
-        $resultadoQuinielas = mysqli_query($conexion, $consultaQuinielas);
-        $filaQuinielas = mysqli_fetch_assoc($resultadoQuinielas);
-        $quinielasEnviadas = intval($filaQuinielas["total"]);
-
-        if ($quinielasEnviadas < 2) {
-            $partidosCount = mysqli_num_rows($resultados);
-
-            if (isset($_POST["resultado"]) && count($_POST["resultado"]) === $partidosCount) {
-                foreach ($_POST["resultado"] as $partidoId => $resultado) {
-                    $resultadosSeleccionados[] = array(
-                        "partido_id" => $partidoId,
-                        "resultado" => $resultado
-                    );
-                }
-
-                foreach ($resultadosSeleccionados as $seleccion) {
-                    $partidoId = $seleccion["partido_id"];
-                    $resultado = $seleccion["resultado"];
-
-                    if (insertarQuiniela($conexion, $nombre, $partidoId, $resultado)) {
-                        echo "Apuesta guardada con éxito.";
-                    } else {
-                        echo "Error al guardar la apuesta: " . mysqli_error($conexion);
-                    }
-                }
-            } else {
-                echo "Por favor, selecciona un resultado para cada partido.";
-            }
+        // Verifica que se haya ingresado un nombre de usuario
+        $names = $_POST["names"];
+        if (empty($names)) {
+            echo "Por favor, ingresa tu nombre.";
         } else {
-            echo "Gracias, ya has enviado dos quinielas completas. Te contactaremos en breve.";
+            // Variables para almacenar las selecciones del usuario
+            $resultados = $_POST["resultado"];
+            
+            // Preparar una consulta SQL para la inserción
+            $sql = "INSERT INTO quinielas (names, partido_id, resultado) VALUES (?, ?, ?)";
+            $stmt = mysqli_prepare($conexion, $sql);
+            
+            if (!$stmt) {
+                die("Error al preparar la consulta: " . mysqli_error($conexion));
+            }
+            
+            // Vincular parámetros a la consulta preparada
+            mysqli_stmt_bind_param($stmt, "sis", $names, $partidoId, $resultado);
+            
+            // Insertar los datos en la base de datos
+            foreach ($resultados as $partidoId => $resultado) {
+                $partidoId = intval($partidoId);
+                $resultado = mysqli_real_escape_string($conexion, $resultado);
+                
+                if (mysqli_stmt_execute($stmt)) {
+                    echo "Selecciones guardadas con éxito.";
+                } else {
+                    echo "Error al guardar las selecciones: " . mysqli_error($conexion);
+                }
+            }
+            
+            // Cerrar la consulta preparada
+            mysqli_stmt_close($stmt);
         }
     }
-
-    if ($quinielasEnviadas < 2) {
-        echo '<h1>Selección de Resultados para Jornada ' . $jornadaSeleccionada . '</h1>';
-        echo '<form action="" method="POST">';
-        echo '<label for="nombre">Nombre:</label>';
-        echo '<input type="text" id="nombre" name="nombre" required><br>';
-        echo '<table class="results-table">';
-        echo '<tr><th>Equipo A</th><th>Resultado</th><th>Equipo B</th></tr>';
-
-        while ($partido = mysqli_fetch_assoc($resultados)) {
-            echo '<tr>';
-            echo '<td class="team">' . htmlspecialchars($partido["equipA"]) . '</td>';
-            echo '<td class="result">';
-            echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="equipo_a"> L</label>';
-            echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="empate"> E</label>';
-            echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="equipo_b"> V</label>';
-            echo '</td>';
-            echo '<td class="team">' . htmlspecialchars($partido["equipB"]) . '</td>';
-            echo '</tr>';
-        }
-
-        echo '</table>';
-        echo '<input type="hidden" name="jornada" value="' . $jornadaSeleccionada . '">';
-        echo '<input type="submit" value="Enviar Selecciones">';
-        echo '</form>';
+    
+    // Mostrar un formulario para que el usuario seleccione sus predicciones
+    echo '<h1>Selección de Predicciones para Jornada ' . $jornadaSeleccionada . '</h1>';
+    echo '<form action="" method="POST">';
+    
+    // Campo de entrada para el nombre del usuario (obligatorio)
+    echo '<label for="names">Nombre:</label>';
+    echo '<input type="text" id="names" name="names" required><br>';
+    
+    // Mostrar los partidos y permitir que el usuario haga sus selecciones
+    while ($partido = mysqli_fetch_assoc($resultados)) {
+        echo '<h3>' . $partido["equipA"] . ' vs ' . $partido["equipB"] . '</h3>';
+        echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="local"> Gana ' . $partido["equipA"] . '</label>';
+        echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="empate"> Empate</label>';
+        echo '<label><input type="radio" name="resultado[' . $partido["id"] . ']" value="visitante"> Gana ' . $partido["equipB"] . '</label>';
     }
+    
+    echo '<input type="submit" value="Guardar Predicciones">';
+    echo '</form>';
 } else {
+    // Si no se proporciona la variable "jornada" en la URL, muestra un mensaje de error o redirige a otra página.
     echo 'Jornada no especificada.';
 }
 
+// Cierra la conexión a la base de datos cuando ya no se necesita
 mysqli_close($conexion);
 ?>
