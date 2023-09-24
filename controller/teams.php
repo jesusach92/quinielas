@@ -3,11 +3,11 @@ session_start();
 $session = $_SESSION["id"];
 
 if (!isset($session)) {
-    header("Location: ../userLogin");
+    header("Location: ../view/login.php");
     exit(); // Terminar el script si no hay sesión iniciada
 }
 
-include("../backend/database/config.php");
+include("../model/backend/database/config.php");
 
 // Variable para almacenar el mensaje de éxito o error
 $mensaje = "";
@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["guardar_equipos"])) {
 
     // Verificar si se cargó una imagen de bandera
     if (isset($_FILES["escudo"]) && $_FILES["escudo"]["error"] === UPLOAD_ERR_OK) {
-        $equipoBandera = "../../img/bandera/" . basename($_FILES["escudo"]["name"]);
+        $equipoBandera = "../public/img/bandera/" . basename($_FILES["escudo"]["name"]);
 
         // Mover la imagen a la carpeta de banderas
         move_uploaded_file($_FILES["escudo"]["tmp_name"], $equipoBandera);
     } else {
         // Si no se cargó una imagen, utilizar la bandera predeterminada
-        $equipoBandera = "../../img/bandera/Bandera_not.jpeg";
+        $equipoBandera = "../public/img/bandera/Bandera_not.jpeg";
     }
 
     // Guardar el equipo en la base de datos
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["guardar_equipos"])) {
 
     if (mysqli_query($conexion, $sql)) {
         $mensaje = "Equipo guardado exitosamente.";
-        header("Location: ./teams.html");
+        header("Location: ../view/teams.php");
         echo '<script>alert("Equipo Guardado Correctamente")
         </script>';
     } else {

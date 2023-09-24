@@ -13,7 +13,7 @@ function loginUser($conexion, $email, $password) {
         $row = $result->fetch_assoc(); // Obtiene los datos del usuario
         if (password_verify($password, $row['passwordUser'])) { // Verifica la contraseña proporcionada
             $_SESSION['id'] = $row['id']; // Almacena el ID del usuario en la sesión
-            header("Location: ../admin"); // Redirige al usuario a la página de inicio de sesión
+            header("Location: ../view/index.php"); // Redirige al usuario a la página de inicio de sesión
              exit(); // Finaliza el script
         } else {
             return "Credenciales inválidas."; // Si la contraseña no coincide, devuelve un mensaje de error
@@ -26,7 +26,7 @@ function loginUser($conexion, $email, $password) {
 if (!empty($_POST['email']) && !empty($_POST['password'])) { // Si se proporcionó un correo electrónico y una contraseña
     $loginMessage = loginUser($conexion, $_POST['email'], $_POST['password']); // Llama a la función para realizar el inicio de sesión
     if ($loginMessage !== null) {
-        header("Location: ../userLogin");
+        header("Location: ../view/login.php");
         echo '<script>alert("Error: ' . $loginMessage . '");</script>'; // Muestra un mensaje de error si el inicio de sesión falla
     }
 } else {

@@ -8,7 +8,7 @@
 <body>
 <?php
 // Incluye el archivo de configuración de la base de datos
-include("../pages/backend/database/config.php");
+include("../model/backend/database/config.php");
 // Verifica si se ha proporcionado la variable "jornada" en la URL
 if (isset($_GET["jornada"])) {
     $jornadaSeleccionada = $_GET["jornada"];

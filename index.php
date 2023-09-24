@@ -2,8 +2,8 @@
 session_start();
 if(isset($_SESSION['id']))
 {
-    header("Location: ./pages/admin");
+    header("Location: ./view/index.php");
 }else{
-    header("Location: ./pages/userLogin");
+    header("Location: ./view/login.php");
 }
 ?>
