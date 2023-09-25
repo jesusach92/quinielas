@@ -1,6 +1,7 @@
 <?php
-if(!isset($_SESSION))
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 include("../model/backend/database/config.php");
 
 // Obtener la lista de equipos sin duplicados desde la tabla "equipos"
@@ -23,23 +24,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["agregar_quiniela"])) {
 
     // Verificar si los equipos seleccionados son diferentes
     if ($equipoLocal != $equipoVisitante) {
-        $stmt = mysqli_prepare($conexion, "INSERT INTO partidos (teamLocal,teamVisitor, match_date, fkJornada, channel) VALUES (?, ?, ?, ?,?)");
+        // Verificar si el número de jornada existe en la tabla "jornadas"
+        $consultaVerificarJornada = "SELECT id FROM jornadas WHERE id = ?";
+        $stmtVerificarJornada = mysqli_prepare($conexion, $consultaVerificarJornada);
+        mysqli_stmt_bind_param($stmtVerificarJornada, "i", $numeroJornada);
+        mysqli_stmt_execute($stmtVerificarJornada);
+        mysqli_stmt_store_result($stmtVerificarJornada);
 
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "sssis", $equipoLocal, $equipoVisitante, $fechaPartido, $numeroJornada, $channel);
-            if (mysqli_stmt_execute($stmt)) {
-                header("Location: ../view/successPage.php");
-                $_SESSION["exito"] = 1;
-                $_SESSION["nextPage"] = "./addMatch.php";
+        if (mysqli_stmt_num_rows($stmtVerificarJornada) > 0) {
+            // El número de jornada existe en la tabla "jornadas", ahora puedes realizar la inserción en la tabla "partidos"
+            $stmt = mysqli_prepare($conexion, "INSERT INTO partidos (teamLocal, teamVisitor, match_date, fkJornada, channel) VALUES (?, ?, ?, ?, ?)");
+
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "sssis", $equipoLocal, $equipoVisitante, $fechaPartido, $numeroJornada, $channel);
+                if (mysqli_stmt_execute($stmt)) {
+                    header("Location: ../view/successPage.php");
+                    $_SESSION["exito"] = 1;
+                    $_SESSION["nextPage"] = "./addMatch.php";
+                } else {
+                    header("Location: ../view/failPage.php ");
+                    $_SESSION["nextPage"] = "./addMatch.php";
+                    $_SESSION["message"] = "Error al guardar los datos: " . mysqli_error($conexion);
+                }
+                mysqli_stmt_close($stmt);
             } else {
-                header("Location: ../view/failPage.php ");
-                $_SESSION["nextPage"] = "./addMatch.php";
-                $_SESSION["message"] = "Error al guardar los datos: " . mysqli_error($conexion);
-            }    
-            mysqli_stmt_close($stmt);
+                $message = "Error al preparar la declaración.";
+            }
         } else {
-            $message = "Error al preparar la declaración.";
+            // El número de jornada no existe en la tabla "jornadas", muestra un mensaje de error
+            $message = "Error: El número de jornada no existe.";
         }
+        mysqli_stmt_close($stmtVerificarJornada);
     } else {
         $message = "Error: El equipo local y el equipo visitante deben ser diferentes.";
     }
