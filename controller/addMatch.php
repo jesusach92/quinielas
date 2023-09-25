@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["agregar_quiniela"])) {
 
     // Verificar si los equipos seleccionados son diferentes
     if ($equipoLocal != $equipoVisitante) {
-        $stmt = mysqli_prepare($conexion, "INSERT INTO partidos (teamLocal,teamVisitor, match_date, journeys, channel) VALUES (?, ?, ?, ?,?)");
+        $stmt = mysqli_prepare($conexion, "INSERT INTO partidos (teamLocal,teamVisitor, match_date, fkJornada, channel) VALUES (?, ?, ?, ?,?)");
 
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "sssis", $equipoLocal, $equipoVisitante, $fechaPartido, $numeroJornada, $channel);

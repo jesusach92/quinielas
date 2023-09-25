@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["seleccionar_jornada"]
 }
 
 // Consulta para obtener las jornadas disponibles
-$consultaJornadas = "SELECT DISTINCT journeys FROM partidos";
+$consultaJornadas = "SELECT DISTINCT fkJornada FROM partidos";
 $resultadosJornadas = mysqli_query($conexion, $consultaJornadas);
 
 if (!$resultadosJornadas) {
