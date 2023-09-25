@@ -32,13 +32,9 @@ if(!isset($session)){
                     <div class="flex flex-col gap-2 p-5">
                         <div name="contenedorInput" class="mb-3">
                             <label for="liga" class="block text-gray-700 text-md font-bold mb-2">Liga</label>
-                            <select required
+                            <input type="text" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                name="liga">
-                                <option selected disabled>Elige la Liga</option>
-                                <option value="local">Local</option>
-                                <option value="Extranjera">Extranjera</option>
-                            </select>
+                                id="liga" type="number" placeholder="Nombre de la Liga" name="liga">
                         </div>
                         <div name="contenedorInput" class="mb-3">
                             <label for="jornada" class="block text-gray-700 text-md font-bold mb-2">Número de Jornada</label>

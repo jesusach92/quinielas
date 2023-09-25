@@ -44,7 +44,7 @@ require("../controller/addMatch.php")
                         <a href="jornadas.php" class="focus:outline-none text-white bg-[#DCF5E6] hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-[green-700] dark:focus:ring-green-800">Agregar Jornada</a>
                     </div>
                     <div name="contenedorInput" class="mb-3">
-                        <label class="block text-gray-700 text-md font-bold mb-2" for="numero_jornada">Número de Jornada:</label>
+                        <label class="block text-gray-700 text-md font-bold mb-2" for="numero_jornada">Selecciona una Jornada:</label>
                         <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="numero_jornada" id="numero_jornada">
                             <?php if (mysqli_num_rows($resultadoJornadas) === 0) : ?>
                                 <option value="" selected disabled>No hay jornadas registradas</option>
@@ -53,8 +53,9 @@ require("../controller/addMatch.php")
                             <?php
                                 while ($fila = mysqli_fetch_assoc($resultadoJornadas)) 
                                 {
-                                    $jornada = $fila["numero_jornada"];
-                                    echo "<option value='$jornada'>$jornada</option>";
+                                    $jornada = $fila["descripcion"];
+                                    $id = $fila["$id"];
+                                    echo "<option value=$id>$jornada</option>";
                                 }
                             ?>
                             <?php endif; ?>
@@ -67,8 +68,9 @@ require("../controller/addMatch.php")
                                 while ($fila = mysqli_fetch_assoc($resultadoEquipos)) 
                                 {
                                     $equipo = $fila["nombre"];
-                                    echo "<option value='$equipo'>$equipo</option>";
-                                }
+                                    $id = $fila["id"];
+                                    echo "<option value=$id>$equipo</option>";
+                                }  
                             ?>
                         </select>
                     </div>
@@ -80,14 +82,21 @@ require("../controller/addMatch.php")
                                 while ($fila = mysqli_fetch_assoc($resultadoEquipos)) 
                                 {
                                     $equipo = $fila["nombre"];
-                                    echo "<option value='$equipo'>$equipo</option>";
+                                    $id = $fila["id"];
+                                    echo "<option value=$id>$equipo</option>";
                                 }  
                             ?>
                         </select>
                     </div>
+                    <div name="contenedorInput" class="mb-3">
+                        <label class="block text-gray-700 text-md font-bold mb-2" for="numero_jornada">Canal de Transmicion:</label>
+                            <input type="text" required
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="channel" type="text" placeholder="channel" name="channel">
+                    </div>
                     <div  name="contenedorInput" class="mb-3">
-                        <label class="block text-gray-700 text-md font-bold mb-2" for="fecha_quiniela">Fecha de la Quiniela:</label>
-                        <input type="date" name="fecha_quiniela" id="fecha_quiniela" required><br>
+                        <label class="block text-gray-700 text-md font-bold mb-2" for="fecha_partido">Fecha del Partido:</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="datetime-local" name="fecha_partido" id="fecha_partido" required><br>
                     </div>
                     <div  name="contenedorInput" class="mb-3">
                     <button type="submit" name="agregar_quiniela"

@@ -47,8 +47,6 @@ require("../model/backend/database/config.php")
                         <th>Equipo A</th>
                         <th>Equipo B</th>
                         <th>Jornada</th>
-                        <th>Fecha de Inicio</th>
-                        <th>Fecha de Fin</th>
                     </tr>";
 
             while ($row = $result->fetch_assoc()) {
@@ -58,8 +56,6 @@ require("../model/backend/database/config.php")
                         <td>{$row['equipA']}</td>
                         <td>{$row['equipB']}</td>
                         <td>{$row['journeys']}</td>
-                        <td>{$row['fecha_inicio']}</td>
-                        <td>{$row['fecha_fin']}</td>
                       </tr>";
             }
             echo "</table>";
