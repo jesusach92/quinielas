@@ -23,9 +23,9 @@ $resultadosPartidos = array(); // Inicializa un array vacío para almacenar los 
 
 if ($jornadaSeleccionada !== null) {
     $consultaPartidos = "SELECT p.id, e1.nombre AS teamLocal, e2.nombre AS teamVisitor FROM partidos p
-                        INNER JOIN equipos e1 ON p.teamLocal = e1.id
-                        INNER JOIN equipos e2 ON p.teamVisitor = e2.id
-                        WHERE p.journeys = $jornadaSeleccionada";
+                    INNER JOIN equipos e1 ON p.teamLocal = e1.id
+                    INNER JOIN equipos e2 ON p.teamVisitor = e2.id
+                    WHERE p.journeys = $jornadaSeleccionada";
     $resultadosPartidos = mysqli_query($conexion, $consultaPartidos);
 
     if (!$resultadosPartidos) {
@@ -40,8 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardar_resultados"])
         $partidoId = intval($partidoId);
         $resultado = mysqli_real_escape_string($conexion, $resultado);
 
-        // Verificar si ya existe un registro en la tabla "results" para este partido
-        $consultaExistencia = "SELECT COUNT(*) FROM results WHERE fkmatch = ?";
+        // Reemplazar los valores "Gano Equipo A" y "Gano Equipo B" por "Local" y "Visitante"
+        if ($resultado === "Gano Local") {
+            $resultado = "Local";
+        } elseif ($resultado === "Gano Visitante") {
+            $resultado = "Visitante";
+        }
+
+        // Verifica si ya existe un registro para este partido en la tabla "results"
+        $consultaExistencia = "SELECT id FROM results WHERE fkmatch = ?";
         $stmtExistencia = mysqli_prepare($conexion, $consultaExistencia);
 
         if (!$stmtExistencia) {
@@ -50,11 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardar_resultados"])
 
         mysqli_stmt_bind_param($stmtExistencia, "i", $partidoId);
         mysqli_stmt_execute($stmtExistencia);
-        mysqli_stmt_bind_result($stmtExistencia, $existencia);
-        mysqli_stmt_fetch($stmtExistencia);
-        mysqli_stmt_close($stmtExistencia);
+        $resultadoExistencia = mysqli_stmt_get_result($stmtExistencia);
 
-        if ($existencia > 0) {
+        if (mysqli_num_rows($resultadoExistencia) > 0) {
             // Si ya existe un registro, actualiza el resultado en lugar de insertar uno nuevo
             $actualizarResultado = "UPDATE results SET result = ? WHERE fkmatch = ?";
             $stmtActualizar = mysqli_prepare($conexion, $actualizarResultado);
@@ -71,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardar_resultados"])
 
             mysqli_stmt_close($stmtActualizar);
         } else {
-            // Si no existe un registro, inserta uno nuevo
+            // Si no existe un registro, inserta un nuevo resultado
             $insertarResultado = "INSERT INTO results (fkmatch, result) VALUES (?, ?)";
             $stmt = mysqli_prepare($conexion, $insertarResultado);
 
@@ -87,6 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardar_resultados"])
 
             mysqli_stmt_close($stmt);
         }
+
+        mysqli_stmt_close($stmtExistencia);
     }
 
     // Después de guardar los resultados, puedes mostrar un mensaje de éxito
@@ -155,9 +162,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardar_resultados"])
                     echo "<div>";
                     echo "<label for='resultado_partido{$partidoId}' class='block text-gray-700 text-md font-bold mb-2'>{$equipA} vs {$equipB}:</label>";
                     echo "<select name='resultado[{$partidoId}]' required class='w-full bg-gray-200 text-gray-800 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-green-600'>";
-                    echo "<option value='Gano {$equipA}'>Gano {$equipA}</option>";
+                    echo "<option value='Gano Local'>Gano {$equipA}</option>";
                     echo "<option value='Empate'>Empate</option>";
-                    echo "<option value='Gano {$equipB}'>Gano {$equipB}</option>";
+                    echo "<option value='Gano Visitante'>Gano {$equipB}</option>";
                     echo "</select>";
                     echo "</div>";
                 }
