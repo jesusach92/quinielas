@@ -72,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<table class='min-w-full bg-white shadow-md rounded-lg overflow-hidden'>";
         echo "<thead class='bg-green-800 text-white'>";
         echo "<tr>";
-        echo "<th class='py-2 px-4'>ID</th>";
         echo "<th class='py-2 px-4'>Fecha del Partido</th>";
         echo "<th class='py-2 px-4'>Local</th>";
         echo "<th class='py-2 px-4'>Visitante</th>";
@@ -82,8 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</thead>";
         echo "<tbody>";
         while ($row = $result->fetch_assoc()) {
-            echo "<tr class='transition-transform transform hover:scale-105'>";
-            echo "<td class='py-2 px-4'>{$row['id']}</td>";
+            echo "<tr class='transition-transform transform'>";
             echo "<td class='py-2 px-4'>{$row['match_date']}</td>";
             echo "<td class='py-2 px-4'>{$row['nombreLocal']}<br><img src='{$row['banderaLocal']}' alt='Bandera Local' class='w-20 h-20'></td>";
             echo "<td class='py-2 px-4'>{$row['nombreVisitor']}<br><img src='{$row['banderaVisitor']}' alt='Bandera Visitante' class='w-20 h-20'></td>";

@@ -54,7 +54,7 @@ require("../controller/addMatch.php")
                                 while ($fila = mysqli_fetch_assoc($resultadoJornadas)) 
                                 {
                                     $jornada = $fila["descripcion"];
-                                    $id = $fila["$id"];
+                                    $id = $fila["id"];
                                     echo "<option value=$id>$jornada</option>";
                                 }
                             ?>
@@ -89,7 +89,7 @@ require("../controller/addMatch.php")
                         </select>
                     </div>
                     <div name="contenedorInput" class="mb-3">
-                        <label class="block text-gray-700 text-md font-bold mb-2" for="numero_jornada">Canal de Transmicion:</label>
+                        <label class="block text-gray-700 text-md font-bold mb-2" for="channel">Canal de Transmicion:</label>
                             <input type="text" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="channel" type="text" placeholder="channel" name="channel">
