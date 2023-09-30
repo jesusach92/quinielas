@@ -14,18 +14,14 @@ require("./procesar.php");
     <link rel="stylesheet" href="./css/user.css">k
 </head>
 <body>
-    <!-- Importa el encabezado desde el archivo externo -->
     <?php include_once '../view/common/header.php'; ?>
 
     <div class="container mx-auto mt-10">
         <form id="apuestaForm" method="post" action="./procesar.php">
-            <!-- Campo para que el usuario agregue su nombre -->
             <div class="mb-4">
                 <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            
-            <!-- Campo para que el usuario agregue su número telefónico -->
             <div class="mb-4">
                 <label for="telefono" class="block text-gray-700 font-bold mb-2">Número Telefónico:</label>
                 <input type="tel" id="telefono" name="telefono" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -70,6 +66,7 @@ require("./procesar.php");
                 </tbody>
             </table>
             <div id="totalPrice">Costo total: $ 0.00</div>
+            <input type="hidden" name="precioTotal" id="precioTotal" value="0">
             <input type="submit" value="Enviar Apuesta" class="mt-4 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto">
         </form>
     </div>
@@ -115,6 +112,7 @@ require("./procesar.php");
         if(selections.length === 2)
          totalPrice = totalPrice *2 ;
     });
+    document.getElementById('precioTotal').value = totalPrice;
     document.getElementById('totalPrice').textContent = `Costo total: $${totalPrice}.00`;
 }
         // Agrega una función para enviar el formulario con las selecciones del usuario
@@ -125,12 +123,6 @@ require("./procesar.php");
             input.name = 'selecciones';
             input.value = JSON.stringify(userSelections);
             this.appendChild(input);
-
-            const total = document.createElement('input');
-            total.type = 'hidden';
-            total.name = 'totalPrice';
-            total.value = JSON.stringify(totalPrice);
-            this.appendChild(total);
         });
     </script>
 </body>

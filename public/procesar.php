@@ -2,6 +2,8 @@
 if(!isset($_SESSION))
 session_start();
 
+
+
 // Incluye el archivo de configuración de la base de datos
 include "../model/backend/database/config.php";
 
