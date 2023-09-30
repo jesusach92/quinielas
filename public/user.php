@@ -85,62 +85,7 @@ if (isset($_GET["jornada"])) {
     <title>Apuesta</title>
     <!-- Agrega los estilos de Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
-
-    <style>
-        /* Estilo del círculo verde */
-        .circle-green {
-            width: 60px;
-            height: 60px;
-            background-color: green;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        /* Estilo del círculo rojo cuando se activa */
-        .circle-red {
-            width: 60px;
-            height: 60px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        /* Estilo de la tabla */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            text-align: center;
-            padding: 10px;
-        }
-
-        th {
-            background-color: green;
-            color: white;
-        }
-
-        td {
-            border: none;
-        }
-
-        /* Estilo para el costo total */
-        #totalPrice {
-            font-size: 1.5rem;
-            text-align: center;
-            margin-top: 20px;
-            color: green;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/user.css">k
 </head>
 <body>
     <!-- Importa el encabezado desde el archivo externo -->
@@ -151,13 +96,13 @@ if (isset($_GET["jornada"])) {
             <!-- Campo para que el usuario agregue su nombre -->
             <div class="mb-4">
                 <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <input type="text" id="nombre" name="nombre" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
             
             <!-- Campo para que el usuario agregue su número telefónico -->
             <div class="mb-4">
                 <label for="telefono" class="block text-gray-700 font-bold mb-2">Número Telefónico:</label>
-                <input type="tel" id="telefono" name="telefono" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <input type="tel" id="telefono" name="telefono" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
 
             <table>
@@ -198,7 +143,7 @@ if (isset($_GET["jornada"])) {
                     <?php } // Fin del bucle while ?>
                 </tbody>
             </table>
-            <div id="totalPrice">Costo total: $0.00</div>
+            <div id="totalPrice">Costo total: $ 0.00</div>
             <input type="submit" value="Enviar Apuesta" class="mt-4 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto">
         </form>
     </div>
@@ -234,7 +179,7 @@ if (isset($_GET["jornada"])) {
         }
 
         // Función para calcular el precio total
-        function calculateTotalPrice() {
+ function calculateTotalPrice() {
     const partidoIds = Object.keys(userSelections);
     let totalPrice = 10;
     partidoIds.forEach(partidoId => {
@@ -244,11 +189,8 @@ if (isset($_GET["jornada"])) {
         if(selections.length === 2)
          totalPrice = totalPrice *2 ;
     });
-
     document.getElementById('totalPrice').textContent = `Costo total: $${totalPrice}.00`;
 }
-
-
         // Agrega una función para enviar el formulario con las selecciones del usuario
         document.getElementById('apuestaForm').addEventListener('submit', function (event) {
             // Agrega las selecciones del usuario como un campo oculto en el formulario
@@ -257,6 +199,12 @@ if (isset($_GET["jornada"])) {
             input.name = 'selecciones';
             input.value = JSON.stringify(userSelections);
             this.appendChild(input);
+
+            const total = document.createElement('input');
+            total.type = 'hidden';
+            total.name = 'totalPrice';
+            total.value = JSON.stringify(totalPrice);
+            this.appendChild(total);
         });
     </script>
 </body>
