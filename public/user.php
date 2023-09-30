@@ -147,7 +147,7 @@ if (isset($_GET["jornada"])) {
     <?php include_once '../view/common/header.php'; ?>
 
     <div class="container mx-auto mt-10">
-        <form id="apuestaForm" method="post" action="procesar.php">
+        <form id="apuestaForm" method="post" action="./procesar.php">
             <!-- Campo para que el usuario agregue su nombre -->
             <div class="mb-4">
                 <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre:</label>
